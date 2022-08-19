@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Link from "next/link";
 import Typography from "@mui/material/Typography";
-import FormDialog from "./FormDialog";
+import FormDialog from "../components/FormDialog";
 
 const ResponsiveAppBar = () => {
 	return (
@@ -34,7 +34,7 @@ const ResponsiveAppBar = () => {
 								Главная
 							</Button>
 						</Link>
-						<Link href="/pages/users">
+						<Link href="./users">
 							<Button
 								size='small'
 								sx={{my: 1, color: 'black', display: 'block'}}
