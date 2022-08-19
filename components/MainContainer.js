@@ -1,5 +1,5 @@
 import Head from "next/head";
-import ResponsiveAppBar from "../pages/AppBar";
+import ResponsiveAppBar from "./AppBar";
 
 const MainContainer = ({children, pageName}) => {
 	return (
