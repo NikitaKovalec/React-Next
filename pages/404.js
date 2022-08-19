@@ -11,7 +11,7 @@ export default function Error() {
 			flexDirection: 'column',
 			justifyContent: 'center',
 		}}>
-			<Typography variant="h1" component="div">Страница не найдена</Typography>
+			<Typography variant="h1" component="div">Страница не найдена, а Герман лох. Ну и браза мой</Typography>
 			<Link href={'/'}>
 				<Button variant="contained" style={{marginTop: '20px'}}>На главную</Button>
 			</Link>
