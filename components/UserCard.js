@@ -33,7 +33,7 @@ export default function UserCard({userName, email, website, phone, id}) {
 				</CardContent>
 				<CardActions>
 					<Link href={`users/${id}`}>
-						<Button variant="outlined">Learn More</Button>
+						<Button variant="outlined">Открыть</Button>
 					</Link>
 				</CardActions>
 			</Card>

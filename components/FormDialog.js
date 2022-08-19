@@ -15,20 +15,19 @@ export default function FormDialog() {
 	const handleClickOpen = () => {
 		setOpen(true)
 	}
-
 	const fetchEmail = async () => {
 		if (value !== '') {
 			try {
-				const result = await fetch('http://localhost:3000/sendEmail', {
+				const result = await fetch('https://jsonplaceholder.typicode.com/posts', {
 					mode: 'cors',
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify(value)
+					body: JSON.stringify({value})
 				})
 				if (result.ok) {
-					window.alert("Зарегистрирован")
+					window.alert("Отправлено")
 				} else {
 					throw new Error('Ошибка')
 				}
