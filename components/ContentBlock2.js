@@ -1,4 +1,6 @@
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Link from "next/link";
 
 const ContentBlock = ({h3, text, picUrl, imageUrl}) => {
 	return (
@@ -20,6 +22,9 @@ const ContentBlock = ({h3, text, picUrl, imageUrl}) => {
 				<Typography variant="body1" style={{marginBottom: '10px', width: '80%'}}>
 					{text}
 				</Typography>
+				<Link href={'/users'}>
+					<Button variant="outlined" size="medium" style={{marginTop: '20px'}}>Пользователи</Button>
+				</Link>
 			</div>
 			<div style={{
 				width: '75%',
