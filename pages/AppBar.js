@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Link from "next/link";
 import Typography from "@mui/material/Typography";
 import FormDialog from "../components/FormDialog";
+import Login from "../components/Login";
 
 const ResponsiveAppBar = () => {
 	return (
@@ -43,6 +44,7 @@ const ResponsiveAppBar = () => {
 							</Button>
 						</Link>
 					</Box>
+					<Login />
 					<FormDialog />
 				</Toolbar>
 			</Container>

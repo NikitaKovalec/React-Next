@@ -7,73 +7,88 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import {useRouter} from 'next/router'
 
-export default function FormDialog() {
+export default function Login() {
 	const [open, setOpen] = useState(false)
-	const [value, setValue] = useState('')
+	const [name, setName] = useState('')
+	const [pass, setPass] = useState('')
+	const router = useRouter()
 
 	const handleClickOpen = () => {
 		setOpen(true)
 	}
 	const fetchEmail = async () => {
-		if (value !== '') {
+		if (name || pass !== '') {
 			try {
-				const result = await fetch('https://jsonplaceholder.typicode.com/posts', {
+				const result = await fetch('http://localhost:3000/login/', {
 					mode: 'cors',
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify({value})
+					body: JSON.stringify({name, pass})
 				})
 				if (result.ok) {
-					window.alert("Отправлено")
+					const loginUser = await result.json()
+					console.log(loginUser)
+					await router.push('/profile')
 				} else {
+					await router.push('/registration')
 					throw new Error('Ошибка')
 				}
 			} catch (err) {
 				console.log(err.message)
 			} finally {
-				setValue('')
+				setPass('')
+				setName('')
 				setOpen(false)
 			}
 		}
 	}
 
 	const handleClose = () => {
-		setValue('')
+		setPass('')
+		setName('')
 		setOpen(false)
 	}
 
 	return (
-		<div>
-			<Button variant="contained" onClick={handleClickOpen}>
-				Оставить заявку
+		<div style={{marginRight: '20px'}}>
+			<Button variant="outlined" onClick={handleClickOpen}>
+				Войти
 			</Button>
 			<Dialog open={open} onClose={handleClose}>
-				<img style={{width: '60px', margin: '24px 0 0 16px'}}
-						 src="https://www.notion.so/cdn-cgi/image/format=auto,width=64,quality=100/front-static/pages/product/spot/spot-ecosystem.png"/>
-				<DialogTitle>Подписаться на рассылку</DialogTitle>
+				<DialogTitle>Войти</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						Чтобы подписаться на этот сайт, пожалуйста, введите свой адрес электронной почты здесь. Мы
-						будет присылать обновления время от времени.
+						Заполните поля для входа
 					</DialogContentText>
 					<TextField
-						autoFocus
 						margin="dense"
 						id="name"
-						label={<div style={{color: value !== '' ? 'inherit' : '#ff1744'}}>Введите Email</div>}
+						label='Email'
 						type="email"
 						fullWidth
 						variant="standard"
-						value={value}
-						onChange={e => setValue(e.target.value)}
+						value={name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<TextField
+						margin="dense"
+						id="outlined-password-input"
+						label='Пароль'
+						type="password"
+						fullWidth
+						variant="standard"
+						autoComplete="current-password"
+						value={pass}
+						onChange={e => setPass(e.target.value)}
 					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClose}>Выход</Button>
-					<Button onClick={fetchEmail}>Подписаться</Button>
+					<Button onClick={() => router.push('/registration')}>Регистрация</Button>
+					<Button variant="outlined" onClick={fetchEmail}>Войти</Button>
 				</DialogActions>
 			</Dialog>
 		</div>

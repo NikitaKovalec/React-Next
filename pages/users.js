@@ -9,21 +9,19 @@ const Users = ({users}) => {
 			<h1 style={{marginTop: '80px'}}>Список пользователей</h1>
 			<Grid container spacing={5}>
 				{users.map(({id, username, email, website, phone}) =>
-
-						<UserCard
-							key={id}
-							userName={username}
-							email={email}
-							website={website}
-							phone={phone}
-							id={id}
-						/>
-
+					<UserCard
+						key={id}
+						userName={username}
+						email={email}
+						website={website}
+						phone={phone}
+						id={id}
+					/>
 				)}
 			</Grid>
 		</MainContainer>
-	);
-};
+	)
+}
 
 export default Users
 
