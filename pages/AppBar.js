@@ -8,8 +8,12 @@ import Link from "next/link";
 import Typography from "@mui/material/Typography";
 import FormDialog from "../components/FormDialog";
 import Login from "../components/Login";
+import {useContext} from "react";
+import {UserContext} from "../context";
 
 const ResponsiveAppBar = () => {
+	const {user} = useContext(UserContext)
+
 	return (
 		<AppBar position="fixed" sx={{bgcolor: 'white'}}>
 			<Container maxWidth="xl">
@@ -44,7 +48,7 @@ const ResponsiveAppBar = () => {
 							</Button>
 						</Link>
 					</Box>
-					<Login />
+					{user ? <Button variant="outlined">Пользователь {user.id}</Button> : <Login />}
 					<FormDialog />
 				</Toolbar>
 			</Container>

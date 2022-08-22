@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from "react";
+import {useContext, useState} from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,11 +8,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useRouter} from 'next/router'
+import {UserContext} from "../context";
 
 export default function Login() {
 	const [open, setOpen] = useState(false)
 	const [name, setName] = useState('')
 	const [pass, setPass] = useState('')
+	const {setUser} = useContext(UserContext)
 	const router = useRouter()
 
 	const handleClickOpen = () => {
@@ -31,14 +33,14 @@ export default function Login() {
 				})
 				if (result.ok) {
 					const loginUser = await result.json()
-					console.log(loginUser)
+					setUser(loginUser)
 					await router.push('/profile')
 				} else {
-					await router.push('/registration')
 					throw new Error('Ошибка')
 				}
 			} catch (err) {
 				console.log(err.message)
+				setUser(null)
 			} finally {
 				setPass('')
 				setName('')

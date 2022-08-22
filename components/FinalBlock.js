@@ -11,9 +11,10 @@ const FinalBlock = () => {
 			margin: '80px 0'
 		}}>
 			<img
+				alt={'image'}
 				loading="lazy"
 				style={{width: '80px', marginBottom: '10px'}}
-				src="https://www.notion.so/cdn-cgi/image/format=auto,width=256,quality=100/front-static/shared/icons/notion-app-icon-3d.png"/>
+				src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Notion-logo.svg/1200px-Notion-logo.svg.png"/>
 			<Typography variant="h4"
 									style={{textAlign: 'center', fontWeight: 700, lineHeight: '2rem', marginBottom: '10px'}}>
 				Try Notion today
