@@ -37,8 +37,9 @@ User.sync()
 const dev = process.env.NODE_ENV !== 'production'
 const clientApp = next({dev, dir: '../'})
 const handle = clientApp.getRequestHandler()
-const key = crypto.randomBytes(32)
-const iv = crypto.randomBytes(16)
+const password = process.env.APP_SECRET
+const key = crypto.scryptSync(password, 'salt', 32)
+const iv = Buffer.alloc(16, 0)
 
 clientApp.prepare().then(() => {
   const app = express()
@@ -46,34 +47,6 @@ clientApp.prepare().then(() => {
   app.use(express.json())
   app.use(cookieParser())
   app.use(express.urlencoded({extended: false}))
-
-  app.get('*', (req, res) => {
-    try {
-      return handle(req, res)
-    } catch (err) {
-      console.log(err)
-    }
-  })
-
-  app.get('/', async (req, res) => {
-    const cookies = req.cookies
-    const encryptedUserId = cookies.user_session
-
-    function decrypt(string) {
-      const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv)
-      let decrypted = decipher.update(string, 'hex', 'utf8')
-      decrypted += decipher.final('utf8')
-      return decrypted
-    }
-
-    let user = null
-    if (encryptedUserId) {
-      user = (await User.findOne({where: {id: decrypt(encryptedUserId)}})).dataValues
-    }
-    console.log(user)
-    res.json(user)
-  })
-
 
   app.post('/login', async (req, res) => {
     if (!req.body) return res.status(400).send('Заполните поля')
@@ -124,6 +97,28 @@ clientApp.prepare().then(() => {
     res.send('Вы вышли')
   })
 
+  app.get('*', async (req, res) => {
+    try {
+      const cookies = req.cookies
+      const encryptedUserId = cookies.user_session
+
+      function decrypt(string) {
+        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv)
+        let decrypted = decipher.update(string, 'hex', 'utf8')
+        decrypted += decipher.final('utf8')
+        return decrypted
+      }
+
+      let userObj = null
+      if (encryptedUserId) {
+        userObj = (await User.findOne({where: {id: decrypt(encryptedUserId)}})).dataValues
+      }
+      req.user = userObj
+      return handle(req, res)
+    } catch (err) {
+      console.log(err)
+    }
+  })
 
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}!`)

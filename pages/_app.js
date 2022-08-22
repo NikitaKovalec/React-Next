@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Head from 'next/head';
 import {ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,10 +11,9 @@ import {UserContext} from "../context"
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-export default function MyApp(props, {userObj}) {
-  const {Component, emotionCache = clientSideEmotionCache, pageProps} = props;
+export default function MyApp({Component, emotionCache = clientSideEmotionCache, pageProps, userObj}) {
   const [user, setUser] = useState(userObj || null)
-
+  console.log(userObj)
   return (
     <UserContext.Provider value={{user, setUser}}>
       <CacheProvider value={emotionCache}>
@@ -33,20 +31,10 @@ export default function MyApp(props, {userObj}) {
 }
 
 export async function getServerSideProps(context) {
-  const res = await fetch('http://localhost:3000/')
-  const userObj = await res.json()
-  if (!userObj) {
-    return {
-      props: null
+  const user = context.req.user
+  return {
+    props: {
+      userObj: user
     }
   }
-  return {
-    props: {userObj}
-  }
 }
-
-MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  emotionCache: PropTypes.object,
-  pageProps: PropTypes.object.isRequired,
-};
