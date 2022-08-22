@@ -7,6 +7,7 @@ import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 import {useState} from "react";
 import {UserContext} from "../context"
+import App from "next/app";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -30,11 +31,9 @@ export default function MyApp({Component, emotionCache = clientSideEmotionCache,
   );
 }
 
-export async function getServerSideProps(context) {
-  const user = context.req.user
-  return {
-    props: {
-      userObj: user
-    }
-  }
-}
+// MyApp.getInitialProps = async (context) => {
+//   const appProps = await App.getInitialProps(context)
+//   const user = {...appProps}
+//
+//   return {userObj: user}
+// }
