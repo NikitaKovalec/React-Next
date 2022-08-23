@@ -27,3 +27,5 @@ const Index = () => {
 }
 
 export default Index
+
+export const getServerSideProps = async () => ({ props: {} });

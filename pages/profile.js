@@ -1,9 +1,12 @@
 import MainContainer from "../components/MainContainer"
 import Button from "@mui/material/Button";
 import {useRouter} from "next/router";
+import {useContext} from "react";
+import {UserContext} from "../context";
 
 const Profile = () => {
 	const router = useRouter()
+	const {setUser} = useContext(UserContext)
 
 	const fetchLogOut = async () => {
 		try {
@@ -13,6 +16,7 @@ const Profile = () => {
 			})
 			if (result.ok) {
 				window.alert('Вы вышли')
+				setUser(null)
 				await router.push('/')
 			} else {
 				throw new Error('Ошибка')
@@ -31,3 +35,5 @@ const Profile = () => {
 }
 
 export default Profile
+
+export const getServerSideProps = async () => ({ props: {} });

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import ResponsiveAppBar from "../pages/AppBar";
+import ResponsiveAppBar from "./AppBar";
 
 const MainContainer = ({children, pageName}) => {
 	return (
@@ -19,3 +19,5 @@ const MainContainer = ({children, pageName}) => {
 };
 
 export default MainContainer;
+
+export const getServerSideProps = async () => ({ props: {} });

@@ -97,3 +97,4 @@ export default function Login() {
   );
 }
 
+export const getServerSideProps = async () => ({ props: {} });

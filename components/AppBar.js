@@ -6,8 +6,8 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Link from "next/link";
 import Typography from "@mui/material/Typography";
-import FormDialog from "../components/FormDialog";
-import Login from "../components/Login";
+import FormDialog from "./FormDialog";
+import Login from "./Login";
 import {useContext} from "react";
 import {UserContext} from "../context";
 
@@ -40,7 +40,7 @@ const ResponsiveAppBar = () => {
                 Главная
               </Button>
             </Link>
-            <Link href="./users">
+            <Link href="../users">
               <Button
                 size='small'
                 sx={{my: 1, color: 'black', display: 'block'}}
@@ -57,3 +57,5 @@ const ResponsiveAppBar = () => {
   );
 };
 export default ResponsiveAppBar;
+
+export const getServerSideProps = async () => ({ props: {} });

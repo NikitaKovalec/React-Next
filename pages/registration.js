@@ -65,3 +65,4 @@ export default function Registration() {
   );
 }
 
+export const getServerSideProps = async () => ({ props: {} });

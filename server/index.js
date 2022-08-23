@@ -97,6 +97,25 @@ clientApp.prepare().then(() => {
     res.send('Вы вышли')
   })
 
+
+  app.get('/users/', async (req, res) => {
+    try {
+      const users = await User.findAll()
+      res.json(users)
+    } catch (err) {
+      await console.log('Ошибка ' + err)
+    }
+  })
+
+  app.get('/users/:id', async (req, res) => {
+    try {
+      const user = await User.findOne({where: {id: req.params.id}})
+      res.json(user)
+    } catch (err) {
+      await console.log('Ошибка ' + err)
+    }
+  })
+
   app.get('*', async (req, res) => {
     try {
       const cookies = req.cookies
